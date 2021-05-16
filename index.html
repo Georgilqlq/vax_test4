@@ -20,10 +20,12 @@
         vaxInit();
 
 
-        const reflectionCube = new THREE.CubeTextureLoader().load([
+        const refractionCube = new THREE.CubeTextureLoader().load([
             'posx.jpg', 'negx.jpg',
             'posy.jpg', 'negy.jpg',
             'posz.jpg', 'negz.jpg']);
+        refractionCube.mapping = THREE.CubeRefractionMapping;
+
 
 
         camera.fov = 30;
@@ -32,13 +34,18 @@
             'posx.jpg', 'negx.jpg',
             'posy.jpg', 'negy.jpg',
             'posz.jpg', 'negz.jpg']);
+        // camera.position.set(0, 0, 0);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-        var material = new THREE.MeshLambertMaterial({ color: 0xff6611, envMap: reflectionCube, combine: THREE.MixOperation, reflectivity: 0.3 });
-        var geometry = new THREE.IcosahedronGeometry(2);
-        var icosahedron = new THREE.Mesh(geometry, material);
-        icosahedron.position.set(0, 0, 1);
-        scene.add(icosahedron);
+        var material = new THREE.MeshLambertMaterial({ color: 0xffffff, envMap: refractionCube, combine: THREE.MixOperation, reflectivity: 0.8 });
+        var geometry = new THREE.IcosahedronGeometry(5);
 
+
+        for (var i = 0; i < 20; i++) {
+            var icosahedron = new THREE.Mesh(geometry, material);
+            icosahedron.position.set(THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100));
+            scene.add(icosahedron);
+        }
 
         window.addEventListener("deviceorientation", handleOrientation, true);
         var alpha_prev, beta_prev, gamma_prev;
