@@ -46,7 +46,7 @@
         var orbit = new THREE.Group();
         for (var i = 0; i < 20; i++) {
             var icosahedron = new THREE.Mesh(geometry, material);
-            icosahedron.position.set(THREE.Math.randFloat(-100, 80), THREE.Math.randFloat(-100, 80), THREE.Math.randFloat(-100, 80));
+            icosahedron.position.set(THREE.Math.randFloat(-80, 80), THREE.Math.randFloat(-80, 80), THREE.Math.randFloat(-80, 80));
             orbit.add(icosahedron);
         }
 
@@ -93,7 +93,7 @@
 
         function animate() {
             orbit.rotation.set(0, t, 0);
-            camera.lookAt(point.position);
+            // camera.lookAt(point.position);
         }
     </script>
 </body>
