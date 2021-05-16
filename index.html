@@ -72,7 +72,9 @@
                 // scene.background.rotation.y = -alpha * Math.PI / 180;
                 camera.rotation.y = alpha * Math.PI / 180;
                 camera.rotation.x = -gamma * Math.PI / 180;
-                vector.applyAxisAngle(axis, alpha * Math.PI / 180);
+                // vector.applyAxisAngle(axis, alpha * Math.PI / 180);
+                camera.getWorldDirection(vector);
+                camera.lookAt(vector);
                 // camera.lookAt(vector);
                 // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
             }
@@ -82,7 +84,9 @@
                 // scene.rotation.x = gamma * Math.PI / 180;
                 camera.rotation.y = (alpha * Math.PI / 180) - Math.PI;
                 camera.rotation.x = -gamma * Math.PI / 180;
-                vector.applyAxisAngle(axis, alpha * Math.PI / 180);
+                // vector.applyAxisAngle(axis, alpha * Math.PI / 180);
+                camera.getWorldDirection(vector);
+                camera.lookAt(vector);
                 // camera.lookAt(vector);
 
                 // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
