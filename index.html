@@ -20,21 +20,25 @@
         vaxInit();
 
 
-        const refractionCube = new THREE.CubeTextureLoader().load([
+        const reflectionCube = new THREE.CubeTextureLoader().load([
             'posx.jpg', 'negx.jpg',
             'posy.jpg', 'negy.jpg',
             'posz.jpg', 'negz.jpg']);
 
+
         camera.fov = 30;
         onWindowResize();
-        scene.background = refractionCube;
+        scene.background = new THREE.CubeTextureLoader().load([
+            'posx.jpg', 'negx.jpg',
+            'posy.jpg', 'negy.jpg',
+            'posz.jpg', 'negz.jpg']);
         // camera.position.set(0, 0, 0);
         // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         var material = new THREE.MeshLambertMaterial({ color: 0xff6611, envMap: reflectionCube, combine: THREE.MixOperation, reflectivity: 0.3 });
         var geometry = new THREE.IcosahedronGeometry(2);
         var icosahedron = new THREE.Mesh(geometry, material);
-        icosahedron.position.set(4, 4, 4);
+        icosahedron.position.set(0, 0, 1);
         scene.add(icosahedron);
 
 
