@@ -34,7 +34,7 @@
             'images/posx.jpg', 'images/negx.jpg',
             'images/posy.jpg', 'images/negy.jpg',
             'images/posz.jpg', 'images/negz.jpg']);
-            
+
         // camera.position.set(0, 0, 0);
         // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -50,12 +50,8 @@
         }
 
         window.addEventListener("deviceorientation", handleOrientation, true);
-        var alpha_prev, beta_prev, gamma_prev;
-        var flipped = false;
         function handleOrientation(event) {
-            var absolute = event.absolute;
             var alpha = event.alpha;
-            var beta = event.beta;
             var gamma;
             if (event.gamma < 0 && event.gamma > -90) {
                 gamma = event.gamma + 90;
@@ -68,14 +64,6 @@
                 scene.rotation.x = gamma * Math.PI / 180;
             }
         }
-
-
-
-        // scene.remove(light);
-        // var light = new THREE.PointLight(0xffffff, 1, 100);
-        // light.position.set(0, 0, 0);
-        // light.castShadow = true; // default false
-        // scene.add(light);
 
         function animate() {
 
