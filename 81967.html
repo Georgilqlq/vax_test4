@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>81967 vax test 4
+    </title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <script src="three.min.js"></script>
+    <script src="stats.min.js"></script>
+    <script src="WebGL.js"></script>
+    <script src="vax.js"></script>
+</head>
+
+<body>
+    <script>
+        vaxInit();
+
+
+        const refractionCube = new THREE.CubeTextureLoader().load([
+            'images/posx.jpg', 'images/negx.jpg',
+            'images/posy.jpg', 'images/negy.jpg',
+            'images/posz.jpg', 'images/negz.jpg']);
+        refractionCube.mapping = THREE.CubeRefractionMapping;
+
+
+
+        camera.fov = 30;
+        onWindowResize();
+        scene.background = new THREE.CubeTextureLoader().load([
+            'images/posx.jpg', 'images/negx.jpg',
+            'images/posy.jpg', 'images/negy.jpg',
+            'images/posz.jpg', 'images/negz.jpg']);
+
+        // camera.position.set(0, 0, 0);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        var material = new THREE.MeshLambertMaterial({ color: 0xffffff, envMap: refractionCube, combine: THREE.MixOperation, reflectivity: 0.8 });
+        var geometry = new THREE.IcosahedronGeometry(5);
+
+
+
+        var orbit = new THREE.Group();
+        for (var i = 0; i < 20; i++) {
+            var icosahedron = new THREE.Mesh(geometry, material);
+            icosahedron.position.set(THREE.Math.randFloat(-80, 80), THREE.Math.randFloat(-80, 80), THREE.Math.randFloat(-80, 80));
+            orbit.add(icosahedron);
+        }
+
+        orbit.position.set(0, 0, 100);
+        scene.add(orbit);
+
+
+        window.addEventListener("deviceorientation", handleOrientation, true);
+        function handleOrientation(event) {
+            var alpha = event.alpha;
+            var gamma;
+            if (event.gamma < 0 && event.gamma > -90) {
+                gamma = event.gamma + 90;
+                camera.rotation.y = alpha * Math.PI / 180;
+                camera.rotation.x = -gamma * Math.PI / 180;
+            }
+            else {
+                gamma = event.gamma - 90;
+                camera.rotation.y = (alpha * Math.PI / 180) - Math.PI;
+                camera.rotation.x = -gamma * Math.PI / 180;
+            }
+        }
+
+        function animate() {
+            orbit.rotation.set(0, t, 0);
+        }
+    </script>
+</body>
+
+</html>
