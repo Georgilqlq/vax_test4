@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>moving camera hw
+    <title>cube texture
     </title>
     <meta charset="utf-8">
 
@@ -13,88 +13,40 @@
     <script src="stats.min.js"></script>
     <script src="WebGL.js"></script>
     <script src="vax.js"></script>
-    <script src="StereoEffect.js"></script>
 </head>
 
 <body>
     <script>
-        // vaxInit();
-        vaxInitParallax(0.5);
-
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        vaxInit();
 
 
-        var top_bot = new THREE.Group();
-        var geometry = new THREE.PlaneGeometry(30, 30);
-        var material = new THREE.MeshStandardMaterial({ color: 0x00ff00, side: THREE.DoubleSide });
-        var plane = new THREE.Mesh(geometry, material);
-        plane.rotation.set(Math.PI / 2, 0, 0);
-        plane.position.set(0, -15, 0);
-        plane.receiveShadow = true;
-        top_bot.add(plane);
+        const refractionCube = new THREE.CubeTextureLoader().load([
+            'images/posx.jpg', 'images/negx.jpg',
+            'images/posy.jpg', 'images/negy.jpg',
+            'images/posz.jpg', 'images/negz.jpg']);
+        refractionCube.mapping = THREE.CubeRefractionMapping;
 
 
-        var top_plane = plane.clone();
-        top_plane.position.set(0, 15, 0);
-        top_plane.rotation.set(-Math.PI / 2, 0, 0);
-        top_bot.add(top_plane);
-        scene.add(top_bot);
 
-        var left_right = top_bot.clone();
-        left_right.rotation.set(0, 0, Math.PI / 2);
-        scene.add(left_right);
+        camera.fov = 30;
+        onWindowResize();
+        scene.background = new THREE.CubeTextureLoader().load([
+            'images/posx.jpg', 'images/negx.jpg',
+            'images/posy.jpg', 'images/negy.jpg',
+            'images/posz.jpg', 'images/negz.jpg']);
+            
+        // camera.position.set(0, 0, 0);
+        // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-        var front_back = top_bot.clone();
-        front_back.rotation.set(Math.PI / 2, 0, 0);
-        scene.add(front_back);
-
-        var colors = ['black', 'red', 'magenta', 'orange', 'cyan', 'blue', 'yellow', 'purple', 'pink', 'white'];
-        for (var i = 0; i < 10; i++) {
-            var side1 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-            var side2 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-            var side3 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-            var side4 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-            var side5 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-            var side6 = new THREE.Mesh(new THREE.CylinderGeometry(0, 2, 5, 35), new THREE.MeshStandardMaterial());
-
-            side1.castShadow = true;
-            side2.castShadow = true;
-            side3.castShadow = true;
-            side4.castShadow = true;
-            side5.castShadow = true;
-            side6.castShadow = true;
-
-            side1.receiveShadow = true;
-            side2.receiveShadow = true;
-            side3.receiveShadow = true;
-            side4.receiveShadow = true;
-            side5.receiveShadow = true;
-            side6.receiveShadow = true;
+        var material = new THREE.MeshLambertMaterial({ color: 0xffffff, envMap: refractionCube, combine: THREE.MixOperation, reflectivity: 0.8 });
+        var geometry = new THREE.IcosahedronGeometry(5);
 
 
-            side1.material.color.set(colors[i]);
-            side2.material.color.set(colors[i]);
-            side3.material.color.set(colors[i]);
-            side4.material.color.set(colors[i]);
-            side5.material.color.set(colors[i]);
-            side6.material.color.set(colors[i]);
-
-
-            side1.position.set(14, Math.floor(Math.random() * 28 - 14), Math.floor(Math.random() * 28 - 14));
-            side2.position.set(-14, Math.floor(Math.random() * 28 - 14), Math.floor(Math.random() * 28 - 14));
-            side3.position.set(Math.floor(Math.random() * 28 - 14), Math.floor(Math.random() * 28 - 14), 14);
-            side4.position.set(Math.floor(Math.random() * 28 - 14), Math.floor(Math.random() * 28 - 14), -14);
-            side5.position.set(Math.floor(Math.random() * 28 - 14), 14, Math.floor(Math.random() * 28 - 14));
-            side6.position.set(Math.floor(Math.random() * 28 - 14), -14, Math.floor(Math.random() * 28 - 14));
-
-            scene.add(side1, side2, side3, side4, side5, side6);
-
+        for (var i = 0; i < 20; i++) {
+            var icosahedron = new THREE.Mesh(geometry, material);
+            icosahedron.position.set(THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100));
+            scene.add(icosahedron);
         }
-
-        camera.position.set(0, 0, 0);
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
-
 
         window.addEventListener("deviceorientation", handleOrientation, true);
         var alpha_prev, beta_prev, gamma_prev;
@@ -118,11 +70,11 @@
 
 
 
-        scene.remove(light);
-        var light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(0, 0, 0);
-        light.castShadow = true; // default false
-        scene.add(light);
+        // scene.remove(light);
+        // var light = new THREE.PointLight(0xffffff, 1, 100);
+        // light.position.set(0, 0, 0);
+        // light.castShadow = true; // default false
+        // scene.add(light);
 
         function animate() {
 

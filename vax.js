@@ -23,26 +23,40 @@
  * 
  */
 
-var renderer, scene, camera, light, stats, clock, t, animate;
+var renderer, scene, camera, light, stats, clock, t, dT, animate, perspective = true;
 
-function vaxInit() {
+function vaxInit(rendererOptions = { antialias: true }) {
     if (!THREE.WEBGL.isWebGLAvailable())
         alert(THREE.WEBGL.getWebGLErrorMessage());
 
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer(rendererOptions);
     document.body.appendChild(renderer.domElement);
     document.body.style.margin = 0;
     document.body.style.overflow = 'hidden';
 
-    stats = new Stats();
-    document.body.appendChild(stats.dom);
+    if (typeof Stats !== 'undefined') {
+        stats = new Stats();
+        document.body.appendChild(stats.dom);
+    }
 
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color('white');
+    if (typeof Physijs !== 'undefined')
+        scene = new Physijs.Scene();
+    else
+        scene = new THREE.Scene();
+
+    if (rendererOptions.alpha) {
+        renderer.setClearColor(0, 0);
+    }
+    else {
+        scene.background = new THREE.Color('white');
+    }
 
     clock = new THREE.Clock(true);
 
-    camera = new THREE.PerspectiveCamera(60, 1, 1, 1000);
+    if (perspective)
+        camera = new THREE.PerspectiveCamera(60, 1, 1, 1000);
+    else
+        camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, window.innerHeight / 2, -window.innerHeight / 2, 1, 1000);
     camera.position.set(0, 0, 100);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
