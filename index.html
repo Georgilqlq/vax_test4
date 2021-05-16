@@ -60,7 +60,7 @@
             var alpha = event.alpha;
             var gamma;
             if (event.gamma < 0 && event.gamma > -90) {
-                gamma = event.gamma + 90;
+                // gamma = event.gamma + 90;
                 camera.rotation.set(-gamma * Math.PI / 180, alpha * Math.PI / 180, 0);
             }
             else {
