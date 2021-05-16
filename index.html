@@ -46,17 +46,17 @@
         var orbit = new THREE.Group();
         for (var i = 0; i < 20; i++) {
             var icosahedron = new THREE.Mesh(geometry, material);
-            icosahedron.position.set(THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100));
+            icosahedron.position.set(THREE.Math.randFloat(-100, 80), THREE.Math.randFloat(-100, 80), THREE.Math.randFloat(-100, 80));
             orbit.add(icosahedron);
         }
 
         scene.add(orbit);
 
         
-        var vector = new THREE.Vector3(1, 0, 0);
+        var vector = new THREE.Vector3(0, 0, 0);
         
-        var axis = new THREE.Vector3(0, 1, 0);
-        camera.up = new THREE.Vector3(0, 1, 100);
+        var axis = new THREE.Vector3(0, 1, 100);
+        camera.up = new THREE.Vector3(0, 1, 0);
         camera.lookAt(vector);
         // var angle = Math.PI / 2;
 
