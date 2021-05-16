@@ -43,11 +43,14 @@
 
 
 
+        var orbit = new THREE.Group();
         for (var i = 0; i < 20; i++) {
             var icosahedron = new THREE.Mesh(geometry, material);
             icosahedron.position.set(THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100), THREE.Math.randFloat(-100, 100));
-            scene.add(icosahedron);
+            orbit.add(icosahedron);
         }
+
+        scene.add(orbit);
 
         window.addEventListener("deviceorientation", handleOrientation, true);
         function handleOrientation(event) {
@@ -71,7 +74,7 @@
         }
 
         function animate() {
-
+            orbit.rotation.set(0, t, 0);
         }
     </script>
 </body>
