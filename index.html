@@ -50,14 +50,20 @@
             orbit.add(icosahedron);
         }
 
+        orbit.position.set(0, 0, 100);
         scene.add(orbit);
 
 
         var vector = new THREE.Vector3(0, 0, 0);
 
         var axis = new THREE.Vector3(0, 1, 100);
-        camera.up = new THREE.Vector3(0, 1, 0);
-        camera.lookAt(vector);
+        var point = new THREE.Object3D();
+        var camera_orbit = new THREE.Group();
+        camera_orbit.add(point);
+        scene.add(camera_orbit);
+        point.position.set(0, 0, 0);
+        // camera.up = new THREE.Vector3(0, 1, 0);
+        camera.lookAt(point.position);
         // var angle = Math.PI / 2;
 
 
@@ -67,29 +73,20 @@
             var gamma;
             if (event.gamma < 0 && event.gamma > -90) {
                 gamma = event.gamma + 90;
-                // scene.rotation.y = -alpha * Math.PI / 180;
-                // scene.rotation.x = gamma * Math.PI / 180;
-                // scene.background.rotation.y = -alpha * Math.PI / 180;
                 camera.rotation.y = alpha * Math.PI / 180;
                 camera.rotation.x = -gamma * Math.PI / 180;
-                // vector.applyAxisAngle(axis, alpha * Math.PI / 180);
-                camera.getWorldDirection(vector);
-                camera.lookAt(vector);
-                // camera.lookAt(vector);
-                // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
+                camera_orbit.rotation.y = alpha * Math.PI / 180;
+                camera_orbit.rotation.x = -gamma * Math.PI / 180;
+                camera.lookAt(point.position);
             }
             else {
                 gamma = event.gamma - 90;
-                // scene.rotation.y = (-alpha * Math.PI / 180) - Math.PI;
-                // scene.rotation.x = gamma * Math.PI / 180;
                 camera.rotation.y = (alpha * Math.PI / 180) - Math.PI;
                 camera.rotation.x = -gamma * Math.PI / 180;
-                // vector.applyAxisAngle(axis, alpha * Math.PI / 180);
-                camera.getWorldDirection(vector);
-                camera.lookAt(vector);
-                // camera.lookAt(vector);
+                camera_orbit.rotation.y = (alpha * Math.PI / 180) - Math.PI;
+                camera_orbit.rotation.x = -gamma * Math.PI / 180;
+                camera.lookAt(point.position);
 
-                // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
 
             }
         }
