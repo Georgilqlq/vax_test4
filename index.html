@@ -52,9 +52,9 @@
 
         scene.add(orbit);
 
-        
+
         var vector = new THREE.Vector3(0, 0, 0);
-        
+
         var axis = new THREE.Vector3(0, 1, 100);
         camera.up = new THREE.Vector3(0, 1, 0);
         camera.lookAt(vector);
@@ -73,7 +73,7 @@
                 camera.rotation.y = alpha * Math.PI / 180;
                 camera.rotation.x = -gamma * Math.PI / 180;
                 vector.applyAxisAngle(axis, alpha * Math.PI / 180);
-                camera.lookAt(vector);
+                // camera.lookAt(vector);
                 // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
             }
             else {
@@ -82,8 +82,8 @@
                 // scene.rotation.x = gamma * Math.PI / 180;
                 camera.rotation.y = (alpha * Math.PI / 180) - Math.PI;
                 camera.rotation.x = -gamma * Math.PI / 180;
-                vector.applyAxisAngle(axis, alpha);
-                camera.lookAt(vector);
+                vector.applyAxisAngle(axis, alpha * Math.PI / 180);
+                // camera.lookAt(vector);
 
                 // camera.lookAt(new THREE.Vector3(alpha * Math.PI / 180, 0, alpha * Math.PI / 180));
 
