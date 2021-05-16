@@ -19,36 +19,36 @@
     <script>
         vaxInit();
 
-        // camera.fov = 30;
-        // onWindowResize();
-        // scene.background = new THREE.CubeTextureLoader().load([
-        //     'posx.jpg', 'negx.jpg',
-        //     'posy.jpg', 'negy.jpg',
-        //     'posz.jpg', 'negz.jpg']);
+        camera.fov = 30;
+        onWindowResize();
+        scene.background = new THREE.CubeTextureLoader().load([
+            'posx.jpg', 'negx.jpg',
+            'posy.jpg', 'negy.jpg',
+            'posz.jpg', 'negz.jpg']);
 
         // camera.position.set(0, 0, 0);
         // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
 
-        // window.addEventListener("deviceorientation", handleOrientation, true);
-        // var alpha_prev, beta_prev, gamma_prev;
-        // var flipped = false;
-        // function handleOrientation(event) {
-        //     var absolute = event.absolute;
-        //     var alpha = event.alpha;
-        //     var beta = event.beta;
-        //     var gamma;
-        //     if (event.gamma < 0 && event.gamma > -90) {
-        //         gamma = event.gamma + 90;
-        //         scene.rotation.y = -alpha * Math.PI / 180;
-        //         scene.rotation.x = gamma * Math.PI / 180;
-        //     }
-        //     else {
-        //         gamma = event.gamma - 90;
-        //         scene.rotation.y = (-alpha * Math.PI / 180) - Math.PI;
-        //         scene.rotation.x = gamma * Math.PI / 180;
-        //     }
-        // }
+        window.addEventListener("deviceorientation", handleOrientation, true);
+        var alpha_prev, beta_prev, gamma_prev;
+        var flipped = false;
+        function handleOrientation(event) {
+            var absolute = event.absolute;
+            var alpha = event.alpha;
+            var beta = event.beta;
+            var gamma;
+            if (event.gamma < 0 && event.gamma > -90) {
+                gamma = event.gamma + 90;
+                scene.rotation.y = -alpha * Math.PI / 180;
+                scene.rotation.x = gamma * Math.PI / 180;
+            }
+            else {
+                gamma = event.gamma - 90;
+                scene.rotation.y = (-alpha * Math.PI / 180) - Math.PI;
+                scene.rotation.x = gamma * Math.PI / 180;
+            }
+        }
 
 
 
