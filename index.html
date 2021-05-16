@@ -32,8 +32,6 @@
             'posx.jpg', 'negx.jpg',
             'posy.jpg', 'negy.jpg',
             'posz.jpg', 'negz.jpg']);
-        // camera.position.set(0, 0, 0);
-        // camera.lookAt(new THREE.Vector3(0, 0, 0));
 
         var material = new THREE.MeshLambertMaterial({ color: 0xff6611, envMap: reflectionCube, combine: THREE.MixOperation, reflectivity: 0.3 });
         var geometry = new THREE.IcosahedronGeometry(2);
